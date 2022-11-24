@@ -77,7 +77,7 @@ class ClassType extends \ReflectionClass
 	/**
 	 * @return Method|null
 	 */
-	public function getConstructor()
+	public function getConstructor(): ?\ReflectionMethod
 	{
 		return ($ref = parent::getConstructor()) ? Method::from($this->getName(), $ref->getName()) : null;
 	}
@@ -86,7 +86,7 @@ class ClassType extends \ReflectionClass
 	/**
 	 * @return Extension|null
 	 */
-	public function getExtension()
+	public function getExtension(): ?\ReflectionExtension
 	{
 		return ($name = $this->getExtensionName()) ? new Extension($name) : null;
 	}
@@ -95,7 +95,7 @@ class ClassType extends \ReflectionClass
 	/**
 	 * @return static[]
 	 */
-	public function getInterfaces()
+	public function getInterfaces(): array
 	{
 		$res = [];
 		foreach (parent::getInterfaceNames() as $val) {
@@ -108,7 +108,7 @@ class ClassType extends \ReflectionClass
 	/**
 	 * @return Method
 	 */
-	public function getMethod($name)
+	public function getMethod($name): \ReflectionMethod
 	{
 		return new Method($this->getName(), $name);
 	}
@@ -117,7 +117,7 @@ class ClassType extends \ReflectionClass
 	/**
 	 * @return Method[]
 	 */
-	public function getMethods($filter = -1)
+	public function getMethods($filter = -1): array
 	{
 		foreach ($res = parent::getMethods($filter) as $key => $val) {
 			$res[$key] = new Method($this->getName(), $val->getName());
@@ -129,16 +129,16 @@ class ClassType extends \ReflectionClass
 	/**
 	 * @return static|null
 	 */
-	public function getParentClass()
+	public function getParentClass(): \ReflectionClass|false
 	{
-		return ($ref = parent::getParentClass()) ? new static($ref->getName()) : null;
+		return ($ref = parent::getParentClass()) ? new static($ref->getName()) : false;
 	}
 
 
 	/**
 	 * @return Property[]
 	 */
-	public function getProperties($filter = -1)
+	public function getProperties($filter = -1): array
 	{
 		foreach ($res = parent::getProperties($filter) as $key => $val) {
 			$res[$key] = new Property($this->getName(), $val->getName());
@@ -150,7 +150,7 @@ class ClassType extends \ReflectionClass
 	/**
 	 * @return Property
 	 */
-	public function getProperty($name)
+	public function getProperty($name): \ReflectionProperty
 	{
 		return new Property($this->getName(), $name);
 	}
@@ -174,7 +174,7 @@ class ClassType extends \ReflectionClass
 	/**
 	 * Returns an annotation value.
 	 * @param  string
-	 * @return IAnnotation|null
+	 * @return IAnnotation
 	 */
 	public function getAnnotation($name)
 	{

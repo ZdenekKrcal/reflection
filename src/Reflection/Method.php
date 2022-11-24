@@ -81,7 +81,7 @@ class Method extends \ReflectionMethod
 	/**
 	 * @return ClassType
 	 */
-	public function getDeclaringClass()
+	public function getDeclaringClass(): \ReflectionClass
 	{
 		return new ClassType(parent::getDeclaringClass()->getName());
 	}
@@ -90,7 +90,7 @@ class Method extends \ReflectionMethod
 	/**
 	 * @return static
 	 */
-	public function getPrototype()
+	public function getPrototype(): \ReflectionMethod
 	{
 		$prototype = parent::getPrototype();
 		return new static($prototype->getDeclaringClass()->getName(), $prototype->getName());
@@ -100,7 +100,7 @@ class Method extends \ReflectionMethod
 	/**
 	 * @return Extension
 	 */
-	public function getExtension()
+	public function getExtension(): ?\ReflectionExtension
 	{
 		return ($name = $this->getExtensionName()) ? new Extension($name) : null;
 	}
@@ -109,7 +109,7 @@ class Method extends \ReflectionMethod
 	/**
 	 * @return Parameter[]
 	 */
-	public function getParameters()
+	public function getParameters(): array
 	{
 		$me = [parent::getDeclaringClass()->getName(), $this->getName()];
 		foreach ($res = parent::getParameters() as $key => $val) {
@@ -137,7 +137,7 @@ class Method extends \ReflectionMethod
 	/**
 	 * Returns an annotation value.
 	 * @param  string
-	 * @return IAnnotation|null
+	 * @return IAnnotation
 	 */
 	public function getAnnotation($name)
 	{
